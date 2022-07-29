@@ -154,15 +154,16 @@ const ShopList = ({ shops, onPagination, onSort, onOrder, allShops }: IProps) =>
     },
     {
       title: t("table:table-item-actions"),
-      dataIndex: "id",
-      key: "actions",
+      dataIndex: "_id",
+      key: "_id",
       align: alignRight,
       render: (id: string, { slug, is_active }: any) => {
+        // console.log({id, slug, is_active})
         return (
           <ActionButtons
             id={id}
             approveButton={true}
-            detailsUrl={`/${slug}`}
+            detailsUrl={`/${slug}?id=${id}`}
             isShopActive={is_active}
           />
         );

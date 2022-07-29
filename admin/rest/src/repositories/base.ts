@@ -18,6 +18,10 @@ export default class Base<C, U> {
     return this.http(`https://pandomart-bazaar.herokuapp.com/api/v1/shops`, "get");
   };
 
+  findShop = async (id: string) => {
+    return this.http(`https://pandomart-bazaar.herokuapp.com/api/v1/shops/${id}`, "get");
+  };
+
   find = async (url: string) => {
     return this.http(url, "get");
   };

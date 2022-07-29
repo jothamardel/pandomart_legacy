@@ -21,7 +21,7 @@ import ErrorMessage from "@components/ui/error-message";
 import usePrice from "@utils/use-price";
 import { useTranslation } from "next-i18next";
 import isEmpty from "lodash/isEmpty";
-import { useShopQuery } from "@data/shop/use-shop.query";
+import { useShopQuery, useSingleShopQuery } from "@data/shop/use-shop.query";
 import { GetStaticPaths } from "next";
 import { CubeIcon } from "@components/icons/shops/cube";
 import { OrdersIcon } from "@components/icons/sidebar";
@@ -30,14 +30,17 @@ import { PercentageIcon } from "@components/icons/shops/percentage";
 import { DollarIcon } from "@components/icons/shops/dollar";
 import ReadMore from "@components/ui/truncate";
 
+
 export default function ShopPage() {
   const { t } = useTranslation();
   const { permissions } = getAuthCredentials();
+ 
   const {
-    query: { shop },
+    query: { shop, id },
     locale,
   } = useRouter();
   const { data, isLoading: loading, error } = useShopQuery(shop!.toString());
+  const { data: response} = useSingleShopQuery(id);
   const { price: totalEarnings } = usePrice(
     data && {
       amount: data?.shop?.balance?.total_earnings!,
@@ -50,6 +53,21 @@ export default function ShopPage() {
   );
   if (loading) return <Loader text={t("common:text-loading")} />;
   if (error) return <ErrorMessage message={error.message} />;
+  // const {
+  //   name,
+  //   is_active,
+  //   logo,
+  //   cover_image,
+  //   description,
+  //   products_count,
+  //   orders_count,
+  //   balance,
+  //   address,
+  //   created_at,
+  //   settings,
+  //   slug,
+  // } = data?.shop! ?? {};
+
   const {
     name,
     is_active,
@@ -63,10 +81,14 @@ export default function ShopPage() {
     created_at,
     settings,
     slug,
-  } = data?.shop! ?? {};
+  } = response?.shop! ?? {};
 
 
-  console.log(data)
+  // console.log({shop, id})
+
+  // console.log("ID:::::::::::::::::>", id)
+
+  console.log("Response:::::::::::> ", response);
 
 
   return (

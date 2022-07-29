@@ -8,6 +8,17 @@ export const fetchShop = async (slug: string) => {
   return { shop: data };
 };
 
+export const fetchSingleShop = async (id: string) => {
+  const { data } = await Shop.findShop(id);
+  // console.log(data)
+  return { shop: data?.data?.data };
+};
+
+
+export const useSingleShopQuery = (id: string) => {
+  return useQuery([], () => fetchSingleShop(id))
+}
+
 type IProps = {
   shop: TShop;
 };

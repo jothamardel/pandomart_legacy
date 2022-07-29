@@ -6,17 +6,20 @@ import { useTranslation } from "next-i18next";
 import SidebarItem from "@components/layouts/navigation/sidebar-item";
 import { ADMIN } from "@utils/constants";
 import { getUserCredentials } from "@utils/auth-utils";
+import { useRouter } from "next/router";
 
 
 const AdminLayout: React.FC = ({ children, userPermissions }) => {
   const { t } = useTranslation();
   const { user } = getUserCredentials();
-
+  const router = useRouter();
+  
   const isAdmin =  user.roles?.filter(item => item.name.includes(ADMIN)).length
-
+  
   const SidebarItemMap = () => (
     <Fragment>
       {siteSettings.sidebarLinks.admin.map(({ href, label, icon }) => {
+        console.log("Side bar::::::::>", router.query)
         if (!isAdmin && (href === '/shops')) {
           return (
              <SidebarItem href={href} label={t(label)} icon={icon} key={href} />

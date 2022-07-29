@@ -13,6 +13,7 @@ import { route } from "next/dist/server/router";
 const OwnerLayout: React.FC = ({ children, userPermissions }) => {
   const { t } = useTranslation();
   const router = useRouter();
+  console.log("Side bar::::::::>", router.query)
   const isAdmin =  userPermissions?.filter(item => item.name.includes(ADMIN)).length
   const SidebarItemMap = () => (
     <Fragment>
